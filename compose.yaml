@@ -1,0 +1,16 @@
+name: cms_workcell
+include: ['wei.compose.yaml']
+services:
+  ur_12idb:
+    build: ../ur_12idb/. 
+    command: python -m ur_rest_node --port 3011 --ur_ip ${UR_IP}
+    ports:
+      - 3011:3011
+    depends_on:
+      - aps_wei_redis
+  # python:
+  #   image: continuumio/miniconda3
+  #   container_name: aps_wei_redis
+  #   command: python -m ur_rest_node --port 3011 --ur_ip ${UR_IP}
+  #   ports:
+  #     - 3011:3011
