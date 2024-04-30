@@ -1,0 +1,73 @@
+name: Example_Workcell
+
+# Configuration info and parameters for the workcell and WEI
+# All of these values can be overridden via CLI arguments
+config:
+  workcell_origin_coordinates: [0, 0, 0, 0, 0, 0]
+  # This is the name of the container running the WEI server,
+  # or the hostname/IP of the machine running the WEI server if not using Docker (or addressing from another machine)
+  server_host: aps_wei_server
+  server_port: 8000
+  redis_host: aps_wei_redis
+  redis_port: 6379
+  reset_locations: false
+  update_interval: 5.0
+  use_diaspora: false
+  log_level: 20 # INFO level, see https://docs.python.org/3/library/logging.html#levels for a list of levels
+
+#List of all components accessible in this workcell
+modules:
+  - name: ur_12idb
+    model: ur_12idb
+    interface: wei_rest_node
+    config:
+      rest_node_address: "http://ur_12idb:3011"
+      rest_node_auth: ""
+    workcell_coordinates: [0, 0, 0, 0, 0, 0]
+
+
+locations:
+  webcam:
+    webcam.pos: 0
+  workcell:
+    webcam.pos: [15, 0, 0, 0, 0, 0]
+
+# name: Example_Workflow
+# metadata:
+#   author: Tobias Ginsburg, Kyle Hippe, Ryan D. Lewis
+#   info: Example workflow for WEI
+#   version: 0.2
+
+# modules:
+#   - name: sleeper
+#   - name: webcam
+
+# flowdef:
+#   #This defines a step in the workflow. Each step represents an action on a single module
+#   #This is a human legible name for the step
+#   # - name: Sleep workcell for t seconds
+#   #This defines which module the action will run on, in this case, a test node that simply sleeps for t seconds
+#     # module: sleeper
+#   #This tells the module which action in its library to run, in this case grabbing a wellplate from one of the storage tower
+#     # action: sleep
+#   #These arguments specify the parameters for the action above, in this case, which tower the arm will pull a plate from.
+#     # args:
+#       # t: "payload.wait_time"
+#   #This represents checks that will take place before the system runs, in this case, there are none specified
+#     # checks: null
+#   #This is a place for additional notes
+#     # comment: Sleep for 5 seconds before we take a picture
+
+#   - name: Sleep workcell for t seconds
+#     module: sleeper
+#     action: sleep
+#     args:
+#       t: "payload.wait_time"
+#     checks: null
+#     comment: Sleep for 5 seconds before we take a picture
+
+#   - name: Take Picture
+#     module: webcam
+#     action: take_picture
+#     args:
+#       file_name: "payload.file_name"
